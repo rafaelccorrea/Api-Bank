@@ -23,6 +23,28 @@ class AuthService {
     }
   }
 
+  static async update(id, updateUsers){
+    try{
+      const account = await database.User.findByPk(id);
+
+      if (account) {
+
+        const updateUser = await database.User.update(
+          updateUsers,
+          {
+            where: { id: Number(id) },
+            returning: true,
+            plain: true,
+          }
+        );
+        return updateUser[1];
+      }
+      return null;
+    }catch (error) {
+      throw error;
+    }
+  }
+
 }
 
 export default AuthService;

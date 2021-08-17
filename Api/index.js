@@ -19,16 +19,15 @@ app.use(express.urlencoded({ extended: false }));
 
 const port = process.env.PORT || 8000;
 
-app.get("*", (req, res) =>
+app.get("/", (req, res) =>
   res.status(200).send({
     message: "Welcome to this API.",
   })
 );
 
-// app.use('/api/*', TokenMiddleware);
+app.use('/api/*', TokenMiddleware);
 app.use("/", AuthRoutes);
 app.use("/api", UserAccountRoutes);
-
 
 app.listen(port, () => {
   console.log(`Server is running on PORT ${port}`);

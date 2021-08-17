@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { AuthService} from '../services';
+import { AuthService, UserAccountService} from '../services';
 import { Request, generateToken } from '../utils';
 import { AuthValidation } from '../validations';
 
@@ -18,6 +18,7 @@ class AuthController {
       );
 
       const user = await AuthService.signin(login);
+      // const bank = await UserAccountService.getByIds(req.dataReq)
 
       if (user ) {
         const auth = await bcrypt.compare(password, user.password);
@@ -29,7 +30,7 @@ class AuthController {
           });
 
         } else {
-          request.setError(404, 'Senha incorreta');
+          request.setError('Senha incorreta',404);
           return request.send(res);
         }
       } else request.setError('Nenhuma conta corresponde a esse login');

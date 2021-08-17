@@ -37,6 +37,10 @@ module.exports = {
       birth: {
         type: Sequelize.STRING,
       },
+
+      accountId: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

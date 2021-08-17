@@ -8,7 +8,7 @@ export default (req, res, next) => {
       .send({ status: 'error', message: 'No token provided.' });
   }
 
-  jwt.verify(token.split(' ')[1], 'ganhepontos', (err, decoded) => {
+  jwt.verify(token.split(' ')[1], 'cucafresca', (err, decoded) => {
     if (err) {
       return res
         .status(500)

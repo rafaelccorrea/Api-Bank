@@ -1,4 +1,4 @@
-import { UserAccountService } from '../services';
+import { UserAccountService, AuthService } from '../services';
 import { Request } from '../utils';
 import { UserAccountValidation}  from '../Validations'
 
@@ -12,12 +12,14 @@ class UserAccount {
 
       await UserAccountValidation.UserAccount.validate(req.body, { abortEarly: false })
 
-      const userId =  req.dataReq;
+      const userId = req.dataReq.id
 
-      const existAccount = await UserAccountService.getAccountById(userId)
+      const existAccount = await UserAccountService.getByIds({
+        where: {userId: userId}
+      })
 
       if(existAccount) {
-        request.setSuccess(200, 'Este usuário já tem Conta Bancaria cadastrada')
+        request.setError('Este usuário já tem Conta Bancaria cadastrada', 400)
         return request.send(res);
       }
 
@@ -27,6 +29,12 @@ class UserAccount {
         legal_name: req.dataReq.name,
         bank_code: '345'
       })
+
+      await AuthService.update(userId, {
+        accountId: account.id
+      })
+
+      console.log(account)
 
       if (account) {
         request.setSuccess(200, "Conta Bancaria criada com sucesso", account);
@@ -43,14 +51,8 @@ class UserAccount {
   static async getAccountById(req,res){
 
     try {
-      await UserAccountValidation.getAccountById.validate(
-        {
-          id: req.params.id,
-        },
-        { abortEarly: false }
-      );
 
-      const account = await UserAccountService.getById(req.params.id);
+      const account = await UserAccountService.getByIds(req.dataReq);
 
       if (account) { request.setSuccess(200, 'Conta Bancaria consultada com sucesso', account); } else request.setError('Conta Bancaria inexistente', 400);
 
@@ -79,7 +81,7 @@ class UserAccount {
 
   static async deleteAccount(req, res) {
     try {
-      const { id: accountId } = req.params;
+      const accountId = req.dataReq.accountId;
 
       await UserAccountValidation.deleteAccount.validate(
         { id: accountId },
@@ -103,7 +105,7 @@ class UserAccount {
 
   static async UpdateAccount(req,res){
     try {
-      const { id: accountId } = req.params;
+      const accountId = req.dataReq.accountId;
 
       await UserAccountValidation.updateAccount.validate(
         { ...req.body, id: accountId },
@@ -117,7 +119,6 @@ class UserAccount {
       if (account) {
         request.setSuccess(200, "Conta Bancaria atualizada com sucesso", account);
       } else request.setError("Não foi possível atualizar a Conta Bancaria");
-
       return request.send(res);
     } catch (error) {
       request.setError(error);

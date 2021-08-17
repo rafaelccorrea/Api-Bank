@@ -20,10 +20,20 @@ class UserAccountService {
 
   }
 
+  static async getByIds(userId){
+
+    try {
+      return await database.UserAccount.findOne(userId);
+    } catch (error) {
+      throw error;
+    }
+
+  }
+
   static async getAll(){
     try {
       return await database.UserAccount.findAll();
-    }catch(err){
+    }catch(error){
       throw error;
     }
   }
