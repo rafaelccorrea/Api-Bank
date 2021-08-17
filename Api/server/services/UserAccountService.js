@@ -13,17 +13,19 @@ class UserAccountService {
   static async getById(id){
 
     try {
-      return await database.UserAccount.findByPk(id);
+      return await database.UserAccount.findOne({
+        where: {userId: Number(id)},
+      });
     } catch (error) {
       throw error;
     }
 
   }
 
-  static async getByIds(userId){
+  static async getByIds(id){
 
     try {
-      return await database.UserAccount.findOne(userId);
+      return await database.UserAccount.findOne(id);
     } catch (error) {
       throw error;
     }

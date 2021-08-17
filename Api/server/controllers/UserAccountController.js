@@ -52,9 +52,9 @@ class UserAccount {
 
     try {
 
-      const account = await UserAccountService.getByIds(req.dataReq);
+      const account = await UserAccountService.getById(req.dataReq.id);
 
-      if (account) { request.setSuccess(200, 'Conta Bancaria consultada com sucesso', account); } else request.setError('Conta Bancaria inexistente', 400);
+      if (account) { request.setSuccess(200, 'Conta Bancaria consultada com sucesso', account); } else return res.send({message: 'Conta Bancaria inexistente', status: 'error'});
 
       return request.send(res);
     } catch (error) {
