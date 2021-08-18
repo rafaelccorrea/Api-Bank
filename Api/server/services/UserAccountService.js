@@ -42,10 +42,12 @@ class UserAccountService {
 
   static async delete(id){
     try{
-      const account = await database.UserAccount.findByPk(id);
+      const account = await database.UserAccount.findOne({
+        where: {userId: Number(id)},
+      });
       if(account){
         const deleteAccount = await database.UserAccount.destroy({
-          where: { id: Number(id) },
+          where: { userId: Number(id) },
         });
         return deleteAccount;
       }
@@ -56,8 +58,9 @@ class UserAccountService {
 
   static async update(id, updateAccounts){
     try{
-      const account = await database.UserAccount.findByPk(id);
-
+      const account = await database.UserAccount.findOne({
+        where: {userId: Number(id)},
+      });
       if (account) {
 
         const updateAccount = await database.UserAccount.update(

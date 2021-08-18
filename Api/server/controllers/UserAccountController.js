@@ -81,16 +81,16 @@ class UserAccount {
 
   static async deleteAccount(req, res) {
     try {
-      const accountId = req.dataReq.accountId;
+      const userId = req.dataReq.id;
 
       await UserAccountValidation.deleteAccount.validate(
-        { id: accountId },
+        { id: userId },
         {
           abortEarly: false,
         }
       );
 
-      const account = await UserAccountService.delete(accountId);
+      const account = await UserAccountService.delete(userId);
 
       if (account) {
         request.setSuccess(200, "Conta Bancaria deletada com sucesso");
