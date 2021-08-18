@@ -7,6 +7,8 @@ router.post('/account', UserAccountController.CreateAccount);
 router.get('/account', UserAccountController.getAccountById);
 router.get('/account', UserAccountController.getAllAccounts);
 router.delete('/account', UserAccountController.deleteAccount);
-router.put('/account', UserAccountController.UpdateAccount);
+router.put('/account/:id', UserAccountController.UpdateAccount);
+router.get('/account/:id', UserAccountController.getAccount);
+
 
 export default router;

@@ -32,6 +32,18 @@ class UserAccountService {
 
   }
 
+  static async get(id){
+
+    try {
+      return await database.UserAccount.findOne({
+        where: {id: Number(id)},
+      });
+    } catch (error) {
+      throw error;
+    }
+
+  }
+
   static async getAll(){
     try {
       return await database.UserAccount.findAll();
@@ -59,7 +71,7 @@ class UserAccountService {
   static async update(id, updateAccounts){
     try{
       const account = await database.UserAccount.findOne({
-        where: {userId: Number(id)},
+        where: {id: Number(id)},
       });
       if (account) {
 

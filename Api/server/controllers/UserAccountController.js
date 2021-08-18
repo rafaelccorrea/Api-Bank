@@ -6,6 +6,29 @@ const request = new Request();
 
 class UserAccount {
 
+
+  static async getAccount(req, res){
+
+    try{
+
+      const id = req.params.id;
+
+      const account = await UserAccountService.get(id)
+
+      if (account) { request.setSuccess(200, 'Conta Bancaria consultada com sucesso', account); } else return res.send({message: 'Conta Bancaria inexistente', status: 'error'});
+
+      return request.send(res);
+    }
+   catch (error) {
+    request.setError(error);
+    return request.send(res);
+  }
+
+
+  }
+
+
+
   static async CreateAccount(req,res){
 
     try{
@@ -105,7 +128,8 @@ class UserAccount {
 
   static async UpdateAccount(req,res){
     try {
-      const accountId = req.dataReq.accountId;
+
+      const accountId = req.params.id
 
       await UserAccountValidation.updateAccount.validate(
         { ...req.body, id: accountId },
