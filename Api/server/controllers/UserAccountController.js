@@ -23,11 +23,7 @@ class UserAccount {
     request.setError(error);
     return request.send(res);
   }
-
-
-  }
-
-
+}
 
   static async CreateAccount(req,res){
 
@@ -56,8 +52,6 @@ class UserAccount {
       await AuthService.update(userId, {
         accountId: account.id
       })
-
-      console.log(account)
 
       if (account) {
         request.setSuccess(200, "Conta Bancaria criada com sucesso", account);

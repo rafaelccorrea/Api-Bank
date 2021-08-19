@@ -4,7 +4,6 @@ import { Request, generateToken } from '../utils';
 import { AuthValidation } from '../validations';
 
 const request = new Request();
-
 class AuthController {
   static async signin(req, res) {
     try {
@@ -18,7 +17,6 @@ class AuthController {
       );
 
       const user = await AuthService.signin(login);
-      // const bank = await UserAccountService.getByIds(req.dataReq)
 
       if (user ) {
         const auth = await bcrypt.compare(password, user.password);
