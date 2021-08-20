@@ -10,7 +10,7 @@ const Account = {
       conta_dv: yup.string().required(messages.required),
       typeAccount: yup.string().required(messages.required).oneOf(['conta_corrente', 'conta_poupanca']),
       document_type: yup.string().required(messages.required).oneOf(['CPF', 'CNPJ']),
-      document_number: yup.string().required(messages),
+      document_number: yup.string().required(messages).required(messages.required).length(15, messages.length),
     }),
 
     getAccountById: yup.object({
@@ -37,7 +37,7 @@ const Account = {
       conta_dv: yup.string().required(messages.required),
       typeAccount: yup.string().required(messages.required).oneOf(['conta_corrente', 'conta_poupanca']),
       document_type: yup.string().required(messages.required).oneOf(['CPF', 'CNPJ']),
-      document_number: yup.string().required(messages),
+      document_number: yup.string().required(messages).required(messages.required).length(15, messages.length),
     })
 };
 

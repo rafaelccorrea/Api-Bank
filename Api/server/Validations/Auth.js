@@ -12,11 +12,11 @@ const Auth = {
   signup: yup.object({
     name: yup.string().required(messages.required),
     email: yup.string().required(messages.required),
-    cpf: yup.string().required(messages.required).length(11, messages.length),
+    cpf: yup.string().required(messages.required).length(15, messages.length),
     cellphone: yup
       .string()
       .required(messages.required)
-      .length(11, messages.length),
+      .length(16, messages.length),
     password: yup.string().required(messages.required),
     birth: yup.string().required(messages.required),
   }),
